@@ -420,8 +420,7 @@ public class FXMLDocumentController implements Initializable
             warningMessage.setText("Select the actor first");
         } else
         {
-            warningMessage.setText(" ");
-            // System.out.println("Selection " + movieSelection.getmovieID());
+            warningMessage.setText(" "); //clearing the warning message
             for (int i = 0; i < artistArrayList.size(); i++)
             {
 
@@ -440,8 +439,6 @@ public class FXMLDocumentController implements Initializable
 
             }
 
-            //displaying the movies on the movieTableView
-            // movieTableView.setItems(movieObservableList);
         }
     }
 

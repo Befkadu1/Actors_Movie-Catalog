@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -67,6 +68,9 @@ public class Movie_ArtistMenuController implements Initializable
     
     private String selectMovieListView;
     
+    @FXML
+    private Label warningMessageLabel;
+    
     public static ArtistClass actorSelection;
     /**
      * Initializes the controller class.
@@ -79,7 +83,7 @@ public class Movie_ArtistMenuController implements Initializable
     {
         movieNameObservableList = FXCollections.observableArrayList();
        //Saving all the movies name into the movieNameObservableList
-        for (int i = 0;i < movieObservableList.size(); i++)
+        for (int i = 0;i < movieArrayList.size(); i++)
         {
             movieNameObservableList.add(movieArrayList.get(i).getmovieName());
         }
@@ -130,6 +134,7 @@ public class Movie_ArtistMenuController implements Initializable
     
     @FXML
     private void movieSelectionAction(MouseEvent event){
+        warningMessageLabel.setText(" ");
       selectMovieListView = (String) movieListView.getSelectionModel().getSelectedItem();
       FXMLDocumentController.artistObservableList.clear();
       FXMLDocumentController.movieArrayList.stream()
@@ -145,31 +150,52 @@ public class Movie_ArtistMenuController implements Initializable
          actorSelection = actorTableView.getSelectionModel().getSelectedItem();
           selectMovieListView = (String) movieListView.getSelectionModel().getSelectedItem();
           
-          movieArrayList.stream()
+        /*  if (selectMovieListView != null)             
+        {          
+         
+          FXMLDocumentController.movieArrayList.stream()
                   .filter(i-> i.getmovieName().equals(selectMovieListView))
                   .forEach(s-> movieNameObservableList.remove(s.getmovieName()));
-          
-          artistArrayList.stream()
+         
+        }
+           if (actorSelection != null)
+        {
+          FXMLDocumentController.artistArrayList.stream()
                   .filter(i-> i.getartistId()== actorSelection.getartistId())
                   .forEach(s-> FXMLDocumentController.artistObservableList.remove(actorSelection));
-       /* for (int i = 0; i < movieArrayList.size(); i++)
+          
+        }*/
+ if (selectMovieListView != null )             
         {
 
-                
-            
+         
+        for (int i = 0; i < movieArrayList.size(); i++)
+        {  
             for (int j = 0; j < movieArrayList.get(i).getActorArrayList().size(); j++)
             {
+                if(actorSelection != null){
                 if (actorSelection.getartistId() == movieArrayList.get(i).getActorArrayList().get(j).getartistId())
                 {
-
+                    warningMessageLabel.setText(" ");
                     movieArrayList.get(i).getActorArrayList().remove(actorSelection);
                     artistArrayList.remove(actorSelection);
                     FXMLDocumentController.artistObservableList.remove(actorSelection);
                 }
+               
+                
+                }
+                
+                 else{
+                    warningMessageLabel.setText("Select the actor first");
+                }
 
-       
-          }
-        }*/
+        }
+        
+        }
+        }
+ else{
+      warningMessageLabel.setText("Select the movie first");
+ }
     }
     
      @FXML

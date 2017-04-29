@@ -28,7 +28,7 @@
             <TreeView fx:id="treeView" editable="true" layoutY="35.0" onContextMenuRequested="#getOnMouseClickedOnArtistView" onMouseClicked="#getOnMouseClickedOnArtistView" prefHeight="415.0" prefWidth="200.0" />
             <TextField fx:id="insertFullName" layoutX="14.0" layoutY="450.0" prefHeight="31.0" prefWidth="128.0" promptText="Full name" />
             <TextField fx:id="insertAge" layoutX="15.0" layoutY="491.0" prefHeight="31.0" prefWidth="128.0" promptText="Age" />
-            <Label fx:id="warningMessage" layoutX="20.0" layoutY="537.0" prefHeight="21.0" prefWidth="161.0" text="Warning message" />
+            <Label fx:id="warningMessage" layoutX="20.0" layoutY="537.0" prefHeight="21.0" prefWidth="161.0" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="398.0" prefWidth="338.0">
