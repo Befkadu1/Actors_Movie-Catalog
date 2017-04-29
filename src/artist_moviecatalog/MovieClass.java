@@ -5,6 +5,7 @@
  */
 package artist_moviecatalog;
 
+import java.util.ArrayList;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,11 +20,17 @@ public class MovieClass
     private IntegerProperty movieID;
     private StringProperty movieName;
     private StringProperty publishDate;
+     //private final IntegerProperty movieId;
+    private ArrayList<ArtistClass> actorArrayList;
+    
+    public MovieClass(){  
+    }
     
     public MovieClass(int id, String name, String date){
         this.movieID = new SimpleIntegerProperty(id);
         this.movieName = new SimpleStringProperty(name);
         this.publishDate = new SimpleStringProperty(date);
+        actorArrayList = new ArrayList<>();
         
     }
     
@@ -65,6 +72,16 @@ public class MovieClass
     public StringProperty publishDateProperty()
     {
         return publishDate;
+    }
+    
+    public ArrayList<ArtistClass> getActorArrayList()
+    {
+        return actorArrayList;
+    }
+
+    public void setActorArrayList(ArrayList<ArtistClass> eachActorArrayList)
+    {
+        this.actorArrayList = eachActorArrayList;
     }
     
     

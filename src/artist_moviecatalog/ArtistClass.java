@@ -17,10 +17,10 @@ import javafx.beans.property.StringProperty;
  */
 public class ArtistClass
 {
-    private  final IntegerProperty artistId;
-    private  final StringProperty firstName;
-    private  final StringProperty lastName;   
-    private  final IntegerProperty age;
+    private  IntegerProperty artistId;
+    private  StringProperty firstName;
+    private  StringProperty lastName;   
+    private  IntegerProperty age;
     //private final IntegerProperty movieId;
     private ArrayList<MovieClass> movieArrayList;
 
@@ -91,6 +91,9 @@ public class ArtistClass
     }
     
     public StringProperty firstNameProperty(){
+        if (firstName == null) {
+            firstName = new SimpleStringProperty();
+        }       
         return firstName;
     }
     
@@ -112,9 +115,9 @@ public class ArtistClass
         return movieArrayList;
     }
 
-    public void setMovieArrayList(ArrayList<MovieClass> movieArrayList)
+    public void setMovieArrayList(int n, String name, String date)
     {
-        this.movieArrayList = movieArrayList;
+       movieArrayList.add(new MovieClass(n, name, date)) ;
     }
 
     @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="artist_moviecatalog.FXMLDocumentController">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="artist_moviecatalog.FXMLDocumentController">
    <items>
       <AnchorPane prefHeight="398.0" prefWidth="88.0">
          <opaqueInsets>
@@ -17,19 +18,22 @@
          <children>
             <MenuBar prefHeight="33.0" prefWidth="174.0" AnchorPane.bottomAnchor="365.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <menus>
-                <Menu mnemonicParsing="false" text="Show Movies">
+                <Menu mnemonicParsing="false" onAction="#showMoviesMenu" text="Show Movies">
                   <items>
                     <MenuItem fx:id="showAllMusics" mnemonicParsing="false" text="Open" />
                   </items>
                 </Menu>
               </menus>
             </MenuBar>
-            <TreeView fx:id="treeView" layoutY="35.0" onContextMenuRequested="#getOnMouseClickedOnArtistView" onMouseClicked="#getOnMouseClickedOnArtistView" prefHeight="359.0" prefWidth="200.0" />
+            <TreeView fx:id="treeView" editable="true" layoutY="35.0" onContextMenuRequested="#getOnMouseClickedOnArtistView" onEditCommit="#editTreeViewArtistName" onMouseClicked="#getOnMouseClickedOnArtistView" prefHeight="415.0" prefWidth="200.0" />
+            <TextField fx:id="insertFullName" layoutX="14.0" layoutY="450.0" prefHeight="31.0" prefWidth="128.0" promptText="Full name" />
+            <TextField fx:id="insertAge" layoutX="15.0" layoutY="491.0" prefHeight="31.0" prefWidth="128.0" promptText="Age" />
+            <Label fx:id="warningMessage" layoutX="20.0" layoutY="537.0" prefHeight="21.0" prefWidth="161.0" text="Warning message" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="398.0" prefWidth="338.0">
          <children>
-            <VBox layoutX="37.0" layoutY="30.0" prefHeight="398.0" prefWidth="390.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox prefHeight="507.0" prefWidth="390.0">
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
@@ -61,24 +65,36 @@
                         </GridPane>
                      </children>
                   </HBox>
-                  <TableView fx:id="movieTableView" editable="true" prefHeight="235.0" prefWidth="390.0">
+                  <TableView fx:id="movieTableView" editable="true" prefHeight="302.0" prefWidth="390.0">
                     <columns>
                       <TableColumn fx:id="movieIDcolumn" prefWidth="66.0" text="Id" />
                       <TableColumn fx:id="movieNameColumn" onEditCommit="#handleEditMovieNameAction" prefWidth="194.0" text="Name" />
                         <TableColumn fx:id="moviePublishDateColumn" onEditCommit="#handleEditMoviePublishYearAction" prefWidth="129.0" text="Publish year" />
                     </columns>
                   </TableView>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <HBox>
-                           <children>
-                              <Button fx:id="deleteMovie" mnemonicParsing="false" onAction="#getOnMouseClickedOnMovieTable" prefHeight="71.0" prefWidth="85.0" text="Delete" />
-                           </children>
-                        </HBox>
+
                      </children>
-                  </HBox>
-               </children>
             </VBox>
+            <GridPane layoutY="470.0" prefHeight="95.0" prefWidth="379.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="insertMovieName" prefHeight="105.0" prefWidth="187.0" promptText="Name" />
+                  <TextField fx:id="insertMoviePublishDate" prefHeight="97.0" prefWidth="167.0" promptText="Publish" GridPane.columnIndex="1" />
+                  <TextField fx:id="searchMovie" promptText="Search Music" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#insertMovie" prefHeight="56.0" prefWidth="84.0" text="Insert" GridPane.rowIndex="1" />
+                  <Button fx:id="deleteMovie" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="54.0" prefWidth="85.0" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#seeAllMoviesButton" prefHeight="31.0" prefWidth="119.0" text="See All Movies" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
          </children></AnchorPane>
    </items>
 </SplitPane>
