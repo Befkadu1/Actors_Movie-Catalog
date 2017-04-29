@@ -16,6 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,24 +49,27 @@ public class FXMLDocumentController implements Initializable
 
     @FXML
     private Label showName;
-    
+
     @FXML
     private Label warningMessage;
 
     @FXML
     private Label showAge;
-    
+
     @FXML
     private TextField insertFullName;
-    
+
     @FXML
     private TextField insertAge;
-    
+
     @FXML
     private TextField searchMovie;
 
     @FXML
     private Button deleteMovie;
+
+    @FXML
+    private Button insertMovieButton;
 
     @FXML
     private TreeView treeView;
@@ -74,6 +78,8 @@ public class FXMLDocumentController implements Initializable
     private MenuItem showAllMusics;
 
     public final String name = " ";
+
+    private TreeItem<String> node;
 
     /* @FXML
     private TableView<ArtistClass> artistTableView;
@@ -100,15 +106,15 @@ public class FXMLDocumentController implements Initializable
     private TableColumn<MovieClass, String> moviePublishDateColumn;
 
     @FXML
-    private ImageView imageView;    
-    
+    private ImageView imageView;
+
     @FXML
     private TextField insertMovieName;
-    
+
     @FXML
     private TextField insertMoviePublishDate;
-    
-     private Logic logic = Logic.getInstance(); // singleton
+
+    private Logic logic = Logic.getInstance(); // singleton
 
     //ArrayList to save all artists
     public static ArrayList<ArtistClass> artistArrayList = new ArrayList<>();
@@ -137,7 +143,8 @@ public class FXMLDocumentController implements Initializable
   
     });*/
         //lambda way
-        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> 
+        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)
+                -> 
                 {
                     TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
                     System.out.println("Selected Text : " + selectedItem.getValue());
@@ -152,8 +159,8 @@ public class FXMLDocumentController implements Initializable
 
                     //clearing the movieObservableList
                     movieObservableList.clear();
-                   
-                    for (int j = 0; j <  artistObservableList.size(); j++)
+
+                    for (int j = 0; j < artistObservableList.size(); j++)
                     {
 
                         //filtering the selected actor
@@ -181,10 +188,10 @@ public class FXMLDocumentController implements Initializable
                                     System.out.println("hi");
 
                             }
-                            
+
                             System.out.println("sizeeee line 146 " + artistObservableList.get(j).getMovieArrayList().size());
                             for (int i = 0; i < artistObservableList.get(j).getMovieArrayList().size(); i++)
-                            { 
+                            {
                                 movieObservableList.add(artistObservableList.get(j).getMovieArrayList().get(i));
 
                             }
@@ -212,9 +219,6 @@ public class FXMLDocumentController implements Initializable
         //initialisation of the observableLists
         artistObservableList = FXCollections.observableArrayList();
         movieObservableList = FXCollections.observableArrayList();
-        
-
-
 
         //hard coded objects of MovieClass
         MovieClass movie1 = new MovieClass(1, "Indiana Jones ", "1989");
@@ -281,7 +285,7 @@ public class FXMLDocumentController implements Initializable
             movieObservableList.add(movie);
         }
         showTreeItems();
-        
+
         /*
         //These codes are changed
         TreeItem<String> node2 = new TreeItem<>("Sean Connery");
@@ -289,8 +293,7 @@ public class FXMLDocumentController implements Initializable
         TreeItem<String> node4 = new TreeItem<>("Denzel Washington");
         root.getChildren().addAll(node1, node2, node3, node4);
         treeView.setRoot(root);
-        */
-        
+         */
         //Associate the data with the table columns
         // artistIDcolumn.setCellValueFactory(cellData -> cellData.getValue().artistIdProperty().asObject());
 /*        artistIDcolumn.setCellValueFactory( new PropertyValueFactory<>("artistId"));
@@ -314,26 +317,26 @@ public class FXMLDocumentController implements Initializable
         moviePublishDateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         treeView.setCellFactory(TextFieldTreeCell.forTreeView());// Set a cell factory to use TextFieldTreeCell
 
-
-          searchMovie.textProperty().addListener(( observable,  oldValue,  newValue)-> {
-              //clearing the movieObservableList
+        //addListener for the search box
+        searchMovie.textProperty().addListener((observable, oldValue, newValue) -> 
+                {
+                    //clearing the movieObservableList
                     movieObservableList.clear();
-              movieArrayList.stream()
-                      .filter(t->  t.getmovieName().toLowerCase().startsWith(searchMovie.getText().toLowerCase()))
-                              .forEach(j-> movieObservableList.add(j));
-               
+                    movieArrayList.stream()
+                            .filter(t -> t.getmovieName().toLowerCase().startsWith(searchMovie.getText().toLowerCase()))
+                            .forEach(j -> movieObservableList.add(j));
 
-            });
-            
+        });
 
     }
-    
-    private void showTreeItems(){
-                //Tree items
+
+    private void showTreeItems()
+    {
+        //Tree items
         TreeItem<String> root = new TreeItem<>("Actors");
         for (ArtistClass artistObservableList1 : artistObservableList)
         {
-            TreeItem<String> node = new TreeItem<>(artistObservableList1.getfirstName() + " " + artistObservableList1.getlastName());
+            node = new TreeItem<>(artistObservableList1.getfirstName() + " " + artistObservableList1.getlastName());
             root.getChildren().addAll(node);
         }
         treeView.setRoot(root);
@@ -361,16 +364,14 @@ public class FXMLDocumentController implements Initializable
         ((MovieClass) t.getTableView().getItems().get(t.getTablePosition().getRow())).setpublishDate(t.getNewValue());
 
     }
-    
+
     @FXML
     public void test(TableColumn.CellEditEvent<ArtistClass, String> t)
     {
         //event.getNewValue();
 
-
     }
 
-    
     @FXML
     public void getOnMouseClickedOnMovieTable(ActionEvent event)
     {
@@ -410,128 +411,178 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    public void deleteMovie()
+    public void deleteMovie(ActionEvent event)
     {
-         TreeItem<String> selectedItem =  (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
-         System.out.println("selectedItem" + selectedItem);
+        TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
         movieSelection = movieTableView.getSelectionModel().getSelectedItem();
-       
-       // System.out.println("Selection " + movieSelection.getmovieID());
-     for (int i = 0; i < artistArrayList.size(); i++)
+        if (selectedItem == null )
         {
-            for (int j = 0; j < artistArrayList.get(i).getMovieArrayList().size(); j++)
+            warningMessage.setText("Select the actor first");
+        } else
+        {
+            warningMessage.setText(" ");
+            // System.out.println("Selection " + movieSelection.getmovieID());
+            for (int i = 0; i < artistArrayList.size(); i++)
             {
-                if (movieSelection.getmovieID() == artistArrayList.get(i).getMovieArrayList().get(j).getmovieID())
+
+                for (int j = 0; j < artistArrayList.get(i).getMovieArrayList().size(); j++)
                 {
-                    //The movie should be deleted from the artisArrayList, movieArrayList 
-                    //and also from the movieObservableList(This is to synchronize the view in the table
-                    artistArrayList.get(i).getMovieArrayList().remove(movieSelection);
-                    movieArrayList.remove(movieSelection);
-                    movieObservableList.remove(movieSelection);
+                    if (movieSelection.getmovieID() == artistArrayList.get(i).getMovieArrayList().get(j).getmovieID())
+                    {
+                        //The movie should be deleted from the artisArrayList, movieArrayList 
+                        //and also from the movieObservableList(This is to synchronize the view in the table
+                        artistArrayList.get(i).getMovieArrayList().remove(movieSelection);
+                        movieArrayList.remove(movieSelection);
+                        movieObservableList.remove(movieSelection);
+                    }
+
                 }
 
             }
 
+            //displaying the movies on the movieTableView
+            // movieTableView.setItems(movieObservableList);
         }
-
-        //displaying the movies on the movieTableView
-       // movieTableView.setItems(movieObservableList);
-
     }
-    
-     public void insertMovie()
-    {
-        String movieName = insertMovieName.getText();
-        System.out.println("movieName insert method " + movieName);
-        String artistFullName = treeSelection();
 
-        //System.out.println("length " + artistFullName.length());
-      if(artistFullName.length()>1){
-            String[] parts = artistFullName.split(" ");
-            System.out.println("test " + parts[0]);
-            MovieClass mc = new MovieClass((movieArrayList.size()+1), insertMovieName.getText(), insertMoviePublishDate.getText());
-            for(int i = 0; i< artistObservableList.size(); i++){
-                if(artistObservableList.get(i).getfirstName().equals(parts[0])){
-                     artistObservableList.get(i).setMovieArrayList((movieArrayList.size()+1), insertMovieName.getText(),  insertMoviePublishDate.getText());
+    public void insertMovie(ActionEvent event)
+    {
+
+        TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+
+        if (selectedItem == null || selectedItem == node)
+        {
+            warningMessage.setText("Select the actor first");
+        } else
+        {
+            MovieClass mc = new MovieClass();//initializing
+            String[] parts = selectedItem.getValue().split(" ");
+            int id = 0;
+            boolean check = false;
+
+            //checking if the movie to be added has already existed in the movieArrayList
+            for (int j = 0; j < movieArrayList.size(); j++)
+            {
+
+                if (movieArrayList.get(j).getmovieName().equalsIgnoreCase(insertMovieName.getText())
+                        && movieArrayList.get(j).getpublishDate().equals(insertMoviePublishDate.getText()))
+                {
+
+                    id = movieArrayList.get(j).getmovieID();
+                    check = true;
                 }
             }
+            if (check)
+            {
+                movieObservableList.clear();//Clearing the movieObservableList 
+                mc = new MovieClass(id, insertMovieName.getText(), insertMoviePublishDate.getText());
+                for (int i = 0; i < artistArrayList.size(); i++)
+                {
 
-        
-            movieArrayList.add(mc);
-            movieObservableList.add(movieArrayList.get(movieArrayList.size()-1));
-            
+                    //If the movie is already exist, no need of setting a new ID
+                    if (artistArrayList.get(i).getfirstName().equals(parts[0])
+                            && artistArrayList.get(i).getlastName().equals(parts[1]))
+                    {
+
+                        //If the movie is already exist in other actor's arrayList
+                        artistArrayList.get(i).setMovieArrayList(mc);
+                        for (int j = 0; j < artistArrayList.get(i).getMovieArrayList().size(); j++)
+                        {
+                            movieObservableList.add(artistArrayList.get(i).getMovieArrayList().get(j)); //To show on the display table, sync
+                        }
+
+                    }
+                }
+            } else
+            {
+
+                for (int i = 0; i < artistObservableList.size(); i++)
+                {
+                    if (artistObservableList.get(i).getfirstName().equals(parts[0])
+                            && artistObservableList.get(i).getlastName().equals(parts[1]))
+                    {
+                        mc = new MovieClass((movieArrayList.size() + 1), insertMovieName.getText(), insertMoviePublishDate.getText());
+                        //artistObservableList.get(i).setMovieArrayList((movieArrayList.size()+1), insertMovieName.getText(),  insertMoviePublishDate.getText());
+                        movieArrayList.add(mc); //Adding to the movieArrayList
+                        movieObservableList.add(movieArrayList.get(movieArrayList.size() - 1)); //To show on the display table, sync
+
+                    }
+                }
+
+            }
+
         }
-        else{
-            warningMessage.setText("Please select an actor first");
-        }
-        
-      //  System.out.println("************** "+ movieObservableList.get(movieArrayList.size()-1).getmovieID());
-     /*   artistObservableList.stream()
+
+        //  System.out.println("************** "+ movieObservableList.get(movieArrayList.size()-1).getmovieID());
+        /*   artistObservableList.stream()
                 .filter(m-> m.getfirstName().equals("Harrison"))
                 .map(t-> t.getMovieArrayList().add(mc))
                 .forEach(i-> System.out.println("movie added  " + i.toString()));
 
-*/
-
+         */
     }
-     
-     public void editTreeViewArtistName(){
-        TreeItem<String> selectedItem =  (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
-         String[] parts = selectedItem.getValue().split(" ");
-         System.out.println("---------" + selectedItem.getValue());
-      /*  Stream<ArtistClass> filter = artistObservableList.stream()
+
+    public void editTreeViewArtistName()
+    {
+        TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItems();
+        String[] parts = selectedItem.getValue().split(" ");
+        System.out.println("---------" + selectedItem.getValue());
+        /*  Stream<ArtistClass> filter = artistObservableList.stream()
                 .filter(i->i.firstNameProperty().equals(parts[0])
                 );
          System.out.println("nnnnn " + filter.toArray().toString());*/
-         (artistObservableList.get(0).firstNameProperty()).bindBidirectional(selectedItem.valueProperty());
- 
+        (artistObservableList.get(0).firstNameProperty()).bindBidirectional(selectedItem.valueProperty());
 
     }
-     
-      private TreeItem<ArtistClass> createTreeItem(ArtistClass person) {
+
+    private TreeItem<ArtistClass> createTreeItem(ArtistClass person)
+    {
         TreeItem<ArtistClass> treeItem = new TreeItem<>(person);
-        ChangeListener<String> nameListener = (obs, oldName, newName) -> {
-            TreeModificationEvent<ArtistClass> event = new TreeModificationEvent<>(TreeItem.valueChangedEvent(), treeItem);
-            Event.fireEvent(treeItem, event);
+        ChangeListener<String> nameListener = (obs, oldName, newName) -> 
+                {
+                    TreeModificationEvent<ArtistClass> event = new TreeModificationEvent<>(TreeItem.valueChangedEvent(), treeItem);
+                    Event.fireEvent(treeItem, event);
         };
         person.firstNameProperty().addListener(nameListener);
-        treeItem.valueProperty().addListener((obs, oldValue, newValue) -> {
-            if (oldValue != null) {
-                oldValue.firstNameProperty().removeListener(nameListener);
-            }
-            if (newValue != null) {
-                newValue.firstNameProperty().addListener(nameListener);
-            }
+        treeItem.valueProperty().addListener((obs, oldValue, newValue) -> 
+                {
+                    if (oldValue != null)
+                    {
+                        oldValue.firstNameProperty().removeListener(nameListener);
+                    }
+                    if (newValue != null)
+                    {
+                        newValue.firstNameProperty().addListener(nameListener);
+                    }
         });
-        return treeItem ;
+        return treeItem;
     }
-      
-      private String treeSelection(){
 
-          TreeItem<String> selectedItem =  (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
+    /*private String treeSelection(){
+
+         // TreeItem<String> selectedItem =  (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
           //System.out.println("selectedItem " + selectedItem.toString().isEmpty());
-           if(selectedItem.toString().isEmpty()== true){
-               selectedItem.setValue(""); 
-           }
+          
+
          return selectedItem.getValue();
-      }
-      
-       
-      @FXML
-      private void showMoviesMenu(ActionEvent event) throws IOException{
-                  //forwarding the scene to "DriverTaxiCheck.fxml" if all the boxes are filled
-            Parent root2 = FXMLLoader.load(getClass().getResource("Movie_ArtistMenu.fxml"));
-            Scene scene = new Scene(root2, 700, 500);
-            Stage stage = (Stage) treeView.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle("Movie Page");
-      }
-      
-      @FXML
-      private void seeAllMoviesButton(ActionEvent event){
-          movieObservableList.clear();
-          movieArrayList.stream()
-                  .forEach(s-> movieObservableList.add(s));
-      }
+      }*/
+    @FXML
+    private void showMoviesMenu(ActionEvent event) throws IOException
+    {
+        //forwarding the scene to "DriverTaxiCheck.fxml" if all the boxes are filled
+        Parent root2 = FXMLLoader.load(getClass().getResource("Movie_ArtistMenu.fxml"));
+        Scene scene = new Scene(root2, 700, 500);
+        Stage stage = (Stage) treeView.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Movie Page");
+    }
+
+    @FXML
+    private void seeAllMoviesButton(ActionEvent event)
+    {
+        movieObservableList.clear();
+        movieArrayList.stream()
+                .forEach(s -> movieObservableList.add(s));
+    }
 
 }

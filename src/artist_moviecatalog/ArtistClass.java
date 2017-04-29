@@ -115,9 +115,16 @@ public class ArtistClass
         return movieArrayList;
     }
 
-    public void setMovieArrayList(int n, String name, String date)
+    public void setMovieArrayList(MovieClass newMovieObject)
     {
-       movieArrayList.add(new MovieClass(n, name, date)) ;
+       //movieArrayList.add(new MovieClass(n, name, date)) ;
+        movieArrayList.add(newMovieObject);
+    }
+    
+     public void remove(MovieClass newMovieObject)
+    {
+       //movieArrayList.add(new MovieClass(n, name, date)) ;
+        movieArrayList.remove(newMovieObject);
     }
 
     @Override
