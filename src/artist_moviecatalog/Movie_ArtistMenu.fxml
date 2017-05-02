@@ -1,40 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="428.0" prefWidth="644.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="artist_moviecatalog.Movie_ArtistMenuController">
+<AnchorPane id="AnchorPane" prefHeight="471.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="artist_moviecatalog.Movie_ArtistMenuController">
    <children>
-      <ListView fx:id="movieListView" editable="true" layoutX="21.0" layoutY="66.0" onContextMenuRequested="#movieSelectionAction" onMouseClicked="#movieSelectionAction" prefHeight="230.0" prefWidth="169.0" />
-      <TableView fx:id="actorTableView" editable="true" layoutX="245.0" layoutY="71.0" prefHeight="220.0" prefWidth="313.0">
-        <columns>
-          <TableColumn fx:id="actorIdTableColumn" prefWidth="39.0" text="ID" />
-          <TableColumn fx:id="actorFirstNameTableColumn" onEditCommit="#handleActorFirstNameAction" prefWidth="112.0" text="First name" />
-            <TableColumn fx:id="actorLastNameTableColumn" onEditCommit="#handleActorLastNameAction" prefWidth="103.0" text="Last name" />
-            <TableColumn fx:id="actorAgeTableColumn" prefWidth="52.0" text="Age" />
-        </columns>
-      </TableView>
-      <Button fx:id="backButton" layoutX="21.0" layoutY="383.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="31.0" prefWidth="82.0" text="Back" />
-      <Label layoutX="54.0" layoutY="30.0" prefHeight="21.0" prefWidth="103.0" text="Movie List" />
-      <Label layoutX="335.0" layoutY="30.0" prefHeight="21.0" prefWidth="94.0" text="Actor List" />
-      <TextField fx:id="searchMovie" layoutX="17.0" layoutY="303.0" prefHeight="31.0" prefWidth="158.0" promptText="Search Movie" />
-      <TextField fx:id="searchActor" layoutX="247.0" layoutY="303.0" prefHeight="31.0" prefWidth="150.0" promptText="Search actor" />
-      <Button layoutX="14.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="31.0" prefWidth="94.0" text="Delete" />
-      <Pane layoutX="250.0" layoutY="347.0" prefHeight="124.0" prefWidth="339.0">
-         <children>
-            <Label layoutY="4.0" prefHeight="21.0" prefWidth="94.0" text="Add an actor" />
-            <TextField fx:id="firstNameTextField" layoutX="1.0" layoutY="31.0" prefHeight="31.0" prefWidth="135.0" promptText="First name" />
-            <TextField fx:id="lastNameTextField" layoutX="1.0" layoutY="70.0" prefHeight="31.0" prefWidth="135.0" promptText="Last name" />
-            <TextField fx:id="ageTextField" layoutX="170.0" layoutY="31.0" prefHeight="31.0" prefWidth="150.0" promptText="Age" />
-            <Button layoutX="180.0" layoutY="85.0" mnemonicParsing="false" onAction="#insertArtist" text="Add Actor" />
-         </children>
-      </Pane>
-      <Button layoutX="29.0" layoutY="426.0" mnemonicParsing="false" onAction="#seeAllActorsButton" prefHeight="31.0" prefWidth="75.0" text="See All" />
-      <Label fx:id="warningMessageLabel" layoutX="246.0" layoutY="464.0" prefHeight="21.0" prefWidth="218.0" textFill="#dd1313" />
-      <HBox layoutX="245.0" layoutY="32.0" opacity="0.5" prefHeight="38.0" prefWidth="313.0" style="-fx-background-color: grey;" />
-      <Pane layoutX="24.0" layoutY="26.0" opacity="0.5" prefHeight="38.0" prefWidth="169.0" style="-fx-background-color: grey;" />
+      <SplitPane dividerPositions="0.29797979797979796" layoutX="15.0" layoutY="14.0" prefHeight="471.0" prefWidth="637.0" style="-fx-background-color: #778899;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="469.0" prefWidth="214.0">
+               <children>
+                  <ListView fx:id="movieListView" editable="true" layoutX="5.0" layoutY="54.0" onContextMenuRequested="#movieSelectionAction" onMouseClicked="#movieSelectionAction" prefHeight="359.0" prefWidth="176.0" />
+                  <TextField fx:id="searchMovie" layoutX="5.0" layoutY="427.0" prefHeight="38.0" prefWidth="176.0" promptText="Search Movie" />
+                  <Label layoutX="1.0" prefHeight="52.0" prefWidth="176.0" style="-fx-alignment: center;" text="MOVIE LIST" textFill="#fffafa">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="261.0" prefWidth="432.0">
+               <children>
+                  <Button layoutX="296.0" layoutY="318.0" mnemonicParsing="false" onAction="#seeAllActorsButton" prefHeight="31.0" prefWidth="102.0" style="-fx-background-color: #808080;" text="SEE ALL" textFill="WHITE" />
+                  <TableView fx:id="actorTableView" editable="true" layoutX="30.0" layoutY="59.0" prefHeight="196.0" prefWidth="368.0">
+                    <columns>
+                      <TableColumn fx:id="actorIdTableColumn" prefWidth="39.0" text="ID" />
+                      <TableColumn fx:id="actorFirstNameTableColumn" onEditCommit="#handleActorFirstNameAction" prefWidth="140.0" text="FIRST NAME" />
+                        <TableColumn fx:id="actorLastNameTableColumn" onEditCommit="#handleActorLastNameAction" prefWidth="130.0" text="LAST NAME" />
+                        <TableColumn fx:id="actorAgeTableColumn" prefWidth="58.0" text="AGE" />
+                    </columns>
+                  </TableView>
+                  <TextField fx:id="searchActor" layoutX="30.0" layoutY="287.0" prefHeight="31.0" prefWidth="241.0" promptText="Search actor" />
+                  <Pane layoutX="20.0" layoutY="314.0" prefHeight="138.0" prefWidth="263.0" style="-fx-background-color: #778899;" AnchorPane.topAnchor="335.0">
+                     <children>
+                        <TextField fx:id="firstNameTextField" layoutX="10.0" layoutY="40.0" prefHeight="31.0" prefWidth="176.0" promptText="First name" style="-fx-background-radius: 0;" />
+                        <TextField fx:id="lastNameTextField" layoutX="10.0" layoutY="80.0" prefHeight="31.0" prefWidth="177.0" promptText="Last name" />
+                        <TextField fx:id="ageTextField" layoutX="195.0" layoutY="40.0" prefHeight="31.0" prefWidth="54.0" promptText="Age" />
+                        <Button layoutX="195.0" layoutY="80.0" mnemonicParsing="false" onAction="#insertArtist" prefHeight="31.0" prefWidth="54.0" style="-fx-border-radius: 5; -fx-background-color: #3CB371;" text="Ok" />
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="4.0" prefHeight="31.0" prefWidth="176.0" style="-fx-background-color: #778899; -fx-font-weight: BOLD;" text="ADD AN ACTOR " textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Pane>
+                  <Button layoutX="296.0" layoutY="357.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="31.0" prefWidth="102.0" style="-fx-background-color: #CD5C5C; -fx-border-radius: 10;" text="DELETE" textFill="WHITE" />
+                  <Button fx:id="backButton" layoutX="296.0" layoutY="400.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="31.0" prefWidth="102.0" style="-fx-background-color: #87CEFA;" text="BACK" textFill="WHITE" />
+                  <Label fx:id="warningMessageLabel" layoutX="20.0" layoutY="264.0" prefHeight="21.0" prefWidth="368.0" textFill="#dd1313" />
+                  <Label prefHeight="58.0" prefWidth="447.0" style="-fx-alignment: center;" text="ACTOR´S LIST" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>

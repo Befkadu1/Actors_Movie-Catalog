@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
@@ -11,29 +12,29 @@
 
 <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="574.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="artist_moviecatalog.FXMLDocumentController">
    <items>
-      <AnchorPane prefHeight="398.0" prefWidth="88.0">
+      <AnchorPane prefHeight="398.0" prefWidth="88.0" style="-fx-background-color: #778899;">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <children>
-            <MenuBar prefHeight="33.0" prefWidth="174.0" AnchorPane.bottomAnchor="365.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <MenuBar layoutY="145.0" prefHeight="125.0" prefWidth="200.0" AnchorPane.bottomAnchor="302.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="145.0">
               <menus>
-                <Menu mnemonicParsing="false" onAction="#showMoviesMenu" text="Show Movies">
+                <Menu mnemonicParsing="false" onAction="#showMoviesMenu" text="SHOW MOVIES">
                   <items>
                     <MenuItem fx:id="showAllMusics" mnemonicParsing="false" text="Open" />
                   </items>
                 </Menu>
               </menus>
             </MenuBar>
-            <TreeView fx:id="treeView" editable="true" layoutY="35.0" onContextMenuRequested="#getOnMouseClickedOnArtistView" onMouseClicked="#getOnMouseClickedOnArtistView" prefHeight="415.0" prefWidth="200.0" />
-            <Label fx:id="warningMessage" layoutX="20.0" layoutY="490.0" prefHeight="68.0" prefWidth="161.0" textFill="#dd1313" />
+            <TreeView fx:id="treeView" editable="true" layoutY="188.0" onContextMenuRequested="#getOnMouseClickedOnArtistView" onMouseClicked="#getOnMouseClickedOnArtistView" prefHeight="379.0" prefWidth="200.0" style="-fx-background-color: #778899;" />
+            <ImageView fx:id="imageViewLogo" fitHeight="117.0" fitWidth="119.0" layoutX="29.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="398.0" prefWidth="338.0">
          <children>
-            <VBox prefHeight="507.0" prefWidth="390.0">
+            <VBox prefHeight="507.0" prefWidth="390.0" style="-fx-background-color: #778899;">
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #778899;">
                      <children>
                         <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                         <GridPane>
@@ -47,33 +48,41 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label fx:id="showActorNameText" prefHeight="37.0" prefWidth="65.0" GridPane.rowIndex="1">
+                              <Label fx:id="showActorNameText" prefHeight="37.0" prefWidth="65.0" textFill="#f8f8f8" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label fx:id="showActorAgeText" prefHeight="21.0" prefWidth="62.0" GridPane.rowIndex="2">
+                              <Label fx:id="showActorAgeText" prefHeight="21.0" prefWidth="62.0" textFill="#f2f2f2" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Label fx:id="showName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label fx:id="showAge" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label fx:id="showName" textFill="#fffdfd" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="showAge" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>
                   </HBox>
-                  <TableView fx:id="movieTableView" editable="true" prefHeight="302.0" prefWidth="390.0">
+                  <TableView fx:id="movieTableView" editable="true" prefHeight="301.0" prefWidth="390.0">
                     <columns>
-                      <TableColumn fx:id="movieIDcolumn" prefWidth="66.0" text="Id" />
-                      <TableColumn fx:id="movieNameColumn" onEditCommit="#handleEditMovieNameAction" prefWidth="194.0" text="Name" />
-                        <TableColumn fx:id="moviePublishDateColumn" onEditCommit="#handleEditMoviePublishYearAction" prefWidth="129.0" text="Publish year" />
+                      <TableColumn fx:id="movieIDcolumn" prefWidth="66.0" text="ID" />
+                      <TableColumn fx:id="movieNameColumn" onEditCommit="#handleEditMovieNameAction" prefWidth="194.0" text="NAME" />
+                        <TableColumn fx:id="moviePublishDateColumn" onEditCommit="#handleEditMoviePublishYearAction" prefWidth="129.0" text="PUBLISH YEAR" />
                     </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </TableView>
+                  <Label fx:id="warningMessage" prefHeight="27.0" prefWidth="394.0" textFill="#dd1313">
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </Label>
 
                      </children>
             </VBox>
-            <GridPane layoutY="470.0" prefHeight="95.0" prefWidth="379.0">
+            <GridPane layoutY="470.0" prefHeight="103.0" prefWidth="390.0" style="-fx-background-color: #778899;">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -82,16 +91,27 @@
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="insertMovieName" prefHeight="105.0" prefWidth="187.0" promptText="Name" />
-                  <TextField fx:id="insertMoviePublishDate" prefHeight="97.0" prefWidth="167.0" promptText="Publish" GridPane.columnIndex="1" />
-                  <TextField fx:id="searchMovie" promptText="Search Music" GridPane.columnIndex="2" />
-                  <Button fx:id="insertMovieButton" mnemonicParsing="false" onAction="#insertMovie" prefHeight="56.0" prefWidth="84.0" text="Insert" GridPane.rowIndex="1" />
-                  <Button fx:id="deleteMovie" mnemonicParsing="false" onAction="#deleteMovieFromArtistArrayList" prefHeight="54.0" prefWidth="85.0" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#seeAllMoviesButton" prefHeight="31.0" prefWidth="119.0" text="See All Movies" GridPane.rowIndex="2" />
+                  <TextField fx:id="insertMovieName" prefHeight="36.0" prefWidth="127.0" promptText="Name" />
+                  <TextField fx:id="insertMoviePublishDate" prefHeight="34.0" prefWidth="126.0" promptText="Publish date" GridPane.columnIndex="1" />
+                  <TextField fx:id="searchMovie" prefHeight="32.0" prefWidth="91.0" promptText="Search movie" GridPane.columnIndex="2" />
+                  <Button fx:id="insertMovieButton" mnemonicParsing="false" onAction="#insertMovie" opacity="0.8" prefHeight="32.0" prefWidth="122.0" style="-fx-border-radius: 10; -fx-background-color: #3CB371;" text="INSERT" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+                  <Button fx:id="deleteMovie" mnemonicParsing="false" onAction="#deleteMovieFromArtistArrayList" prefHeight="32.0" prefWidth="122.0" style="-fx-background-color: CD5C5C; -fx-border-radius: 10;" text="DELETE" textFill="#e8e8e8" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" onAction="#seeAllMoviesButton" prefHeight="31.0" prefWidth="119.0" style="-fx-background-color: #808080;" text="SEE ALL " textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
                </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
             </GridPane>
          </children></AnchorPane>
    </items>

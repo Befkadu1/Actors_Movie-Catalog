@@ -133,7 +133,7 @@ public class Logic
                 }
             }
 
-            //Removing the actor from the deleted movie arrayList
+            //Removing the actor from the deleted movie arrayList        
 
           for (int i = 0; i<getAllMovieArrayList().size(); i++)
                 {

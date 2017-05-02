@@ -5,24 +5,21 @@
  */
 package artist_moviecatalog;
 
-import static artist_moviecatalog.FXMLDocumentController.artistArrayList;
-import static artist_moviecatalog.FXMLDocumentController.movieArrayList;
-import static artist_moviecatalog.FXMLDocumentController.movieObservableList;
-import static artist_moviecatalog.FXMLDocumentController.movieSelection;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -32,7 +29,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -129,6 +125,7 @@ public class Movie_ArtistMenuController implements Initializable
         actorFirstNameTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         actorLastNameTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        //search box for the list of actors
         searchActor.textProperty().addListener((observable, oldValue, newValue) -> 
                 {
                     //clearing the movieObservableList
@@ -141,6 +138,7 @@ public class Movie_ArtistMenuController implements Initializable
                     
         });
         
+        //Searching movie from the movie list
         searchMovie.textProperty().addListener((observable, oldValue, newValue) -> 
                 {
                     movieNameObservableList.clear();
@@ -160,7 +158,6 @@ public class Movie_ArtistMenuController implements Initializable
         ((ArtistClass) t.getTableView().getItems().get(t.getTablePosition().getRow())).setfirstName(t.getNewValue());
 
         //Testing if the info is updated
-        System.out.println("test " + FXMLDocumentController.artistObservableList.get(0).getfirstName());
 
     }
     
@@ -173,6 +170,7 @@ public class Movie_ArtistMenuController implements Initializable
     }
 
 
+    //To go to the first scene
     @FXML
     public void backButtonAction(ActionEvent event) throws IOException
     {
@@ -182,6 +180,7 @@ public class Movie_ArtistMenuController implements Initializable
         stage.setScene(scene);
     }
 
+    //To see the list of artists on the selected movie
     @FXML
     private void movieSelectionAction(MouseEvent event)
     {
@@ -199,13 +198,13 @@ public class Movie_ArtistMenuController implements Initializable
             if(logic.getAllMovieArrayList().get(i).getmovieName().equals(selectMovieListView)){
                 movieId = logic.getAllMovieArrayList().get(i).getmovieID();
                 publishDate = logic.getAllMovieArrayList().get(i).getpublishDate();
-                System.out.println("movieId selection method " + movieId);
-                System.out.println("publishDate sel method " + publishDate);
+
             }
         }
 
     }
 
+    //Deleting the movie from the artist's arrayList
     @FXML
     public void deleteMovie()
     {
@@ -232,9 +231,19 @@ public class Movie_ArtistMenuController implements Initializable
         }
         else if (selectMovieListView != null)
         {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete confirmation");
+            alert.setHeaderText("You can not undo this!");
+//        alert.setGraphic(new ImageView(this.getClass().getResource("warning.png").toString()));
+            alert.setContentText("Are you sure you want to delete the actor " + " " + actorSelection.getfirstName() + " " + 
+                    actorSelection.getlastName() + "?");
+            Optional<ButtonType> action = alert.showAndWait();
+           if (action.get() == ButtonType.OK)
+            {
             warningMessageLabel.setText("");
          logic.deleteActorFromMovieArrayList(movieId,actorSelection.getartistId());
          artistObservableList.remove(actorSelection);
+          }
 
         } else
         {
@@ -259,13 +268,14 @@ public class Movie_ArtistMenuController implements Initializable
 
     }
 
+    //Inserting the artist in the Movie arrayList
     public void insertArtist(ActionEvent event)
     {
 
         warningMessageLabel.setText(" ");
         selectMovieListView = (String) movieListView.getSelectionModel().getSelectedItem();
 
-        if (selectMovieListView == null)
+        if (selectMovieListView == null) //message if the movie not selected
         {
             warningMessageLabel.setText("Select the movie first");
         } else
@@ -313,7 +323,6 @@ public class Movie_ArtistMenuController implements Initializable
                     artistObservableList.clear();
                     int newArtisId = (logic.getAllArtistsArrayList().size() + 1);
                     ac = new ArtistClass(newArtisId, firstNameTextField.getText(), lastNameTextField.getText(), actorAge);
-                    System.out.println("ac " + ac);
                     for (int i = 0; i < logic.getAllMovieArrayList().size(); i++)
                     {
                         //to check the added movie in the selected person
@@ -325,8 +334,6 @@ public class Movie_ArtistMenuController implements Initializable
                }
 
                     }
-                    System.out.println("movieId insert " + movieId);
-                System.out.println("publishDate insert " + publishDate);
                                        //Adding the movie in to the new actor's arrayList
                    for(int i = 0; i< logic.getAllArtistsArrayList().size();i++){
                        if(logic.getAllArtistsArrayList().get(i).getartistId()==newArtisId){
