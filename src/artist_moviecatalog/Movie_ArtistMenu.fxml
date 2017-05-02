@@ -9,29 +9,32 @@
 <AnchorPane id="AnchorPane" prefHeight="428.0" prefWidth="644.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="artist_moviecatalog.Movie_ArtistMenuController">
    <children>
       <ListView fx:id="movieListView" editable="true" layoutX="21.0" layoutY="66.0" onContextMenuRequested="#movieSelectionAction" onMouseClicked="#movieSelectionAction" prefHeight="230.0" prefWidth="169.0" />
-      <TableView fx:id="actorTableView" editable="true" layoutX="245.0" layoutY="71.0" prefHeight="220.0" prefWidth="298.0">
+      <TableView fx:id="actorTableView" editable="true" layoutX="245.0" layoutY="71.0" prefHeight="220.0" prefWidth="313.0">
         <columns>
           <TableColumn fx:id="actorIdTableColumn" prefWidth="39.0" text="ID" />
           <TableColumn fx:id="actorFirstNameTableColumn" onEditCommit="#handleActorFirstNameAction" prefWidth="112.0" text="First name" />
-            <TableColumn fx:id="actorLastNameTableColumn" prefWidth="75.0" text="Last name" />
-            <TableColumn fx:id="actorAgeTableColumn" prefWidth="62.0" text="Age" />
+            <TableColumn fx:id="actorLastNameTableColumn" onEditCommit="#handleActorLastNameAction" prefWidth="103.0" text="Last name" />
+            <TableColumn fx:id="actorAgeTableColumn" prefWidth="52.0" text="Age" />
         </columns>
       </TableView>
-      <Button layoutX="21.0" layoutY="383.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="31.0" prefWidth="82.0" text="Back" />
-      <Label layoutX="21.0" layoutY="30.0" prefHeight="21.0" prefWidth="150.0" text="Movie List" />
-      <Label layoutX="300.0" layoutY="30.0" prefHeight="21.0" prefWidth="94.0" text="Actor List" />
-      <TextField layoutX="17.0" layoutY="303.0" prefHeight="31.0" prefWidth="158.0" promptText="Search Movie" />
+      <Button fx:id="backButton" layoutX="21.0" layoutY="383.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="31.0" prefWidth="82.0" text="Back" />
+      <Label layoutX="54.0" layoutY="30.0" prefHeight="21.0" prefWidth="103.0" text="Movie List" />
+      <Label layoutX="335.0" layoutY="30.0" prefHeight="21.0" prefWidth="94.0" text="Actor List" />
+      <TextField fx:id="searchMovie" layoutX="17.0" layoutY="303.0" prefHeight="31.0" prefWidth="158.0" promptText="Search Movie" />
       <TextField fx:id="searchActor" layoutX="247.0" layoutY="303.0" prefHeight="31.0" prefWidth="150.0" promptText="Search actor" />
       <Button layoutX="14.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteMovie" prefHeight="31.0" prefWidth="94.0" text="Delete" />
       <Pane layoutX="250.0" layoutY="347.0" prefHeight="124.0" prefWidth="339.0">
          <children>
             <Label layoutY="4.0" prefHeight="21.0" prefWidth="94.0" text="Add an actor" />
-            <TextField layoutX="1.0" layoutY="31.0" prefHeight="31.0" prefWidth="135.0" promptText="First name" />
-            <TextField layoutX="1.0" layoutY="70.0" prefHeight="31.0" prefWidth="135.0" promptText="Last name" />
-            <TextField layoutX="170.0" layoutY="31.0" prefHeight="31.0" prefWidth="150.0" promptText="Age" />
-            <Label fx:id="warningMessageLabel" layoutX="88.0" layoutY="100.0" prefHeight="21.0" prefWidth="218.0" text="Label" />
+            <TextField fx:id="firstNameTextField" layoutX="1.0" layoutY="31.0" prefHeight="31.0" prefWidth="135.0" promptText="First name" />
+            <TextField fx:id="lastNameTextField" layoutX="1.0" layoutY="70.0" prefHeight="31.0" prefWidth="135.0" promptText="Last name" />
+            <TextField fx:id="ageTextField" layoutX="170.0" layoutY="31.0" prefHeight="31.0" prefWidth="150.0" promptText="Age" />
+            <Button layoutX="180.0" layoutY="85.0" mnemonicParsing="false" onAction="#insertArtist" text="Add Actor" />
          </children>
       </Pane>
       <Button layoutX="29.0" layoutY="426.0" mnemonicParsing="false" onAction="#seeAllActorsButton" prefHeight="31.0" prefWidth="75.0" text="See All" />
+      <Label fx:id="warningMessageLabel" layoutX="246.0" layoutY="464.0" prefHeight="21.0" prefWidth="218.0" textFill="#dd1313" />
+      <HBox layoutX="245.0" layoutY="32.0" opacity="0.5" prefHeight="38.0" prefWidth="313.0" style="-fx-background-color: grey;" />
+      <Pane layoutX="24.0" layoutY="26.0" opacity="0.5" prefHeight="38.0" prefWidth="169.0" style="-fx-background-color: grey;" />
    </children>
 </AnchorPane>

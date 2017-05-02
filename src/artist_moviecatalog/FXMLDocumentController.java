@@ -8,6 +8,7 @@ package artist_moviecatalog;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 import javafx.beans.value.ChangeListener;
@@ -23,7 +24,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
@@ -49,6 +52,12 @@ public class FXMLDocumentController implements Initializable
 
     @FXML
     private Label showName;
+    
+    @FXML
+    private Label showActorNameText;
+    
+    @FXML
+    private Label showActorAgeText;
 
     @FXML
     private Label warningMessage;
@@ -113,6 +122,7 @@ public class FXMLDocumentController implements Initializable
 
     @FXML
     private TextField insertMoviePublishDate;
+    private int insertMoviePublishDateInt= 0;
 
     private Logic logic = Logic.getInstance(); // singleton
 
@@ -129,6 +139,10 @@ public class FXMLDocumentController implements Initializable
     public static ObservableList<MovieClass> movieObservableList;
 
     public static MovieClass movieSelection; //A string to show when the user select the artist table,artistTableView
+    private int actorAge;
+    private int actorId;
+    private String firstName = null;
+    private String lastName = null;
 
     @FXML
     private void getOnMouseClickedOnArtistView(MouseEvent event)
@@ -147,30 +161,39 @@ public class FXMLDocumentController implements Initializable
                 -> 
                 {
                     TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
-                    System.out.println("Selected Text : " + selectedItem.getValue());
-
-                    System.out.println("Movie array size in tree " + movieArrayList.size());
-
+                      if (selectedItem == null || selectedItem == node.getParent() )
+        {
+            System.out.println(" ");
+        }
+                      
+                else{
+                          
+                      
+                    showActorNameText.setText("Name ");
+                    showActorAgeText.setText("Age ");
                     //Spliting first name and last name
                     String[] parts = selectedItem.getValue().split(" ");
 
+                    firstName = parts[0];
+                    lastName = parts[1];
                     //Show the actor's full name
                     showName.setText(parts[0] + " " + parts[1]);
 
                     //clearing the movieObservableList
                     movieObservableList.clear();
 
-                    for (int j = 0; j < artistObservableList.size(); j++)
+                    for (int j = 0; j < logic.getAllArtistsArrayList().size(); j++)
                     {
 
                         //filtering the selected actor
-                        if (artistObservableList.get(j).getfirstName().equalsIgnoreCase(parts[0])
-                                && artistObservableList.get(j).getlastName().equalsIgnoreCase(parts[1]))
+                        if (logic.getAllArtistsArrayList().get(j).getfirstName().equalsIgnoreCase(parts[0])
+                                && logic.getAllArtistsArrayList().get(j).getlastName().equalsIgnoreCase(parts[1]))
                         {
-                            showAge.setText(Integer.toString(artistObservableList.get(j).getage()));
-                            int id = artistObservableList.get(j).getartistId();
+                            actorAge = logic.getAllArtistsArrayList().get(j).getage();
+                            showAge.setText(Integer.toString(logic.getAllArtistsArrayList().get(j).getage()));
+                            actorId = logic.getAllArtistsArrayList().get(j).getartistId();
                             //loading the image for the specific actor
-                            switch (id)
+                            switch (actorId)
                             {
                                 case 1:
                                     loadImage("harison.jpg");
@@ -189,15 +212,16 @@ public class FXMLDocumentController implements Initializable
 
                             }
 
-                            System.out.println("sizeeee line 146 " + artistObservableList.get(j).getMovieArrayList().size());
-                            for (int i = 0; i < artistObservableList.get(j).getMovieArrayList().size(); i++)
+                            System.out.println("selected artist's movieArrayList line 146 " + logic.getAllArtistsArrayList().get(j).getMovieArrayList().size());
+                            for (int i = 0; i < logic.getAllArtistsArrayList().get(j).getMovieArrayList().size(); i++)
                             {
-                                movieObservableList.add(artistObservableList.get(j).getMovieArrayList().get(i));
+                                movieObservableList.add(logic.getAllArtistsArrayList().get(j).getMovieArrayList().get(i));
 
                             }
 
                         }
                     }
+                }
                     //lambda way
                     /*       artistArrayList.stream()
                         .filter(i->i.getfirstName().equalsIgnoreCase(parts[0]) && i.getlastName().equalsIgnoreCase(parts[1]))
@@ -219,9 +243,10 @@ public class FXMLDocumentController implements Initializable
         //initialisation of the observableLists
         artistObservableList = FXCollections.observableArrayList();
         movieObservableList = FXCollections.observableArrayList();
-
+        
+        
         //hard coded objects of MovieClass
-        MovieClass movie1 = new MovieClass(1, "Indiana Jones ", "1989");
+      /*  MovieClass movie1 = new MovieClass(1, "Indiana Jones ", "1989");
         MovieClass movie2 = new MovieClass(2, "Sabrina", "1995");
         MovieClass movie3 = new MovieClass(3, "Firewall", "2006");
         MovieClass movie4 = new MovieClass(4, "Six Days, Seven Nights", "1998");
@@ -262,15 +287,17 @@ public class FXMLDocumentController implements Initializable
         artistArrayList.add(artist1);
         artistArrayList.add(artist2);
         artistArrayList.add(artist3);
-        artistArrayList.add(artist4);
-
-        for (ArtistClass artist : artistArrayList)
+        artistArrayList.add(artist4);*/
+System.out.println("bbbbbbb" + logic.getAllArtistsArrayList().size());
+for (int i = 0; i < logic.getAllArtistsArrayList().size();i++)
         {
-            artistObservableList.add(artist);
+            //logic.addAllActors(artist);
+            artistObservableList.add(logic.getAllArtistsArrayList().get(i));
+            
         }
-
+       
         //saving all the movie objects in the movieArrayList
-        movieArrayList.add(movie1);
+     /*   movieArrayList.add(movie1);
         movieArrayList.add(movie2);
         movieArrayList.add(movie3);
         movieArrayList.add(movie4);
@@ -278,13 +305,20 @@ public class FXMLDocumentController implements Initializable
         movieArrayList.add(movie6);
         movieArrayList.add(movie7);
         movieArrayList.add(movie8);
-
+*/
         //Saving all the movieArrayList into the movieObservableList
-        for (MovieClass movie : movieArrayList)
-        {
+/*        for( MovieClass movie: logic.getAllMovieArrayList()){
+            logic.addAllMovies(movie);
             movieObservableList.add(movie);
-        }
+        }*/
+
+         for(int i = 0; i < logic.getAllMovieArrayList().size(); i++){
+             movieObservableList.add(logic.getAllMovieArrayList().get(i));
+       
+         }
+
         showTreeItems();
+     
 
         /*
         //These codes are changed
@@ -315,16 +349,18 @@ public class FXMLDocumentController implements Initializable
         //initializing
         movieNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         moviePublishDateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        treeView.setCellFactory(TextFieldTreeCell.forTreeView());// Set a cell factory to use TextFieldTreeCell
+        treeView.setCellFactory(TextFieldTreeCell.forTreeView());// Set a cell factory to use TextFieldTreeCell       
+  
 
         //addListener for the search box
         searchMovie.textProperty().addListener((observable, oldValue, newValue) -> 
                 {
                     //clearing the movieObservableList
                     movieObservableList.clear();
-                    movieArrayList.stream()
+                    logic.getAllMovieArrayList().stream()
                             .filter(t -> t.getmovieName().toLowerCase().startsWith(searchMovie.getText().toLowerCase()))
                             .forEach(j -> movieObservableList.add(j));
+
 
         });
 
@@ -334,7 +370,7 @@ public class FXMLDocumentController implements Initializable
     {
         //Tree items
         TreeItem<String> root = new TreeItem<>("Actors");
-        for (ArtistClass artistObservableList1 : artistObservableList)
+        for (ArtistClass artistObservableList1 : logic.getAllArtistsArrayList())
         {
             node = new TreeItem<>(artistObservableList1.getfirstName() + " " + artistObservableList1.getlastName());
             root.getChildren().addAll(node);
@@ -365,14 +401,8 @@ public class FXMLDocumentController implements Initializable
 
     }
 
-    @FXML
-    public void test(TableColumn.CellEditEvent<ArtistClass, String> t)
-    {
-        //event.getNewValue();
 
-    }
-
-    @FXML
+  /*  @FXML
     public void getOnMouseClickedOnMovieTable(ActionEvent event)
     {
         movieSelection = movieTableView.getSelectionModel().getSelectedItem();
@@ -408,36 +438,63 @@ public class FXMLDocumentController implements Initializable
 
         //displaying the movies on the movieTableView
         movieTableView.setItems(movieObservableList);
-    }
+    }*/
 
     @FXML
-    public void deleteMovie(ActionEvent event)
+    public void deleteMovieFromArtistArrayList(ActionEvent event)
     {
         TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
         movieSelection = movieTableView.getSelectionModel().getSelectedItem();
-        if (selectedItem == null )
+        
+         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete confirmation");
+        alert.setHeaderText("You can not undo this!");
+//        alert.setGraphic(new ImageView(this.getClass().getResource("warning.png").toString()));
+        alert.setContentText("Are you sure you want to delete movie" + " " + movieSelection.getmovieName() + "?");
+        Optional<ButtonType> action = alert.showAndWait();
+        if(action.get()==ButtonType.OK){
+            movieSelection = movieTableView.getSelectionModel().getSelectedItem();
+        movieObservableList.remove(movieSelection);
+     //   statusLabel.setText(selectArtist.getName() + " " + "has been deleted. ");
+     //   if(selectArtist.getName()==null){
+     //       statusLabel.setText(" ");
+   //     }
+        }
+        
+        //String actorSelection = movieTableView.getSelectionModel().getSelectedItem();
+        System.out.println("event " + event.getSource().toString());
+        if (selectedItem == null ||  movieSelection == null)
         {
             warningMessage.setText("Select the actor first");
         } else
         {
             warningMessage.setText(" "); //clearing the warning message
-            for (int i = 0; i < artistArrayList.size(); i++)
-            {
-
-                for (int j = 0; j < artistArrayList.get(i).getMovieArrayList().size(); j++)
-                {
-                    if (movieSelection.getmovieID() == artistArrayList.get(i).getMovieArrayList().get(j).getmovieID())
-                    {
+            System.out.println("first name" + firstName);
+             if(logic.removeMovie(movieSelection.getmovieID(),actorId, movieSelection, firstName, lastName)){
+                            movieObservableList.remove(movieSelection);
+                        }
+//            for (int i = 0; i < logic.getAllArtistsArrayList().size(); i++)
+//            {
+//
+//                for (int j = 0; j < logic.getAllArtistsArrayList().get(i).getMovieArrayList().size(); j++)
+//                {
+//                    if (movieSelection.getmovieID() == artistArrayList.get(i).getMovieArrayList().get(j).getmovieID())
+//                    {
                         //The movie should be deleted from the artisArrayList, movieArrayList 
                         //and also from the movieObservableList(This is to synchronize the view in the table
-                        artistArrayList.get(i).getMovieArrayList().remove(movieSelection);
-                        movieArrayList.remove(movieSelection);
-                        movieObservableList.remove(movieSelection);
-                    }
-
-                }
-
-            }
+                        
+//                        if(logic.removeMovie(movieSelection.getmovieID(), movieSelection)){
+//                            movieObservableList.remove(movieSelection);
+//                        }
+                        
+           //             artistArrayList.get(i).getMovieArrayList().remove(movieSelection);
+           //             movieArrayList.remove(movieSelection);
+            //            movieObservableList.remove(movieSelection);
+//                    }
+//
+//                }
+//
+//            }
 
         }
     }
@@ -446,30 +503,86 @@ public class FXMLDocumentController implements Initializable
     {
 
         TreeItem<String> selectedItem = (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
-
-        if (selectedItem == null || selectedItem == node)
+        TreeItem <ArtistClass> selectedItemObject = (TreeItem<ArtistClass>)  treeView.getSelectionModel().getSelectedItem();
+        if (selectedItem == null)
         {
             warningMessage.setText("Select the actor first");
         } else
         {
             MovieClass mc = new MovieClass();//initializing
             String[] parts = selectedItem.getValue().split(" ");
-            int id = 0;
+            int movieId = 0;
             boolean check = false;
+            
+            if(insertMovieName.getText().isEmpty()|| insertMoviePublishDate.getText().isEmpty()){
+                warningMessage.setText("Write both movie name and publish date");
+            }
+            else if(!insertMovieName.getText().matches("^[A-zåäöÅÄÖ-]+$") && (!insertMoviePublishDate.getText().matches("^[0-9]*$"))){
+                 warningMessage.setText("Write only letters");
+            }
+            
+            else{
+   
+            try
+            {
+                insertMoviePublishDateInt = Integer.parseInt(insertMoviePublishDate.getText());
 
             //checking if the movie to be added has already existed in the movieArrayList
-            for (int j = 0; j < movieArrayList.size(); j++)
+            for (int j = 0; j < logic.getAllMovieArrayList().size(); j++)
             {
 
-                if (movieArrayList.get(j).getmovieName().equalsIgnoreCase(insertMovieName.getText())
-                        && movieArrayList.get(j).getpublishDate().equals(insertMoviePublishDate.getText()))
+                if (logic.getAllMovieArrayList().get(j).getmovieName().equalsIgnoreCase(insertMovieName.getText())
+                        && logic.getAllMovieArrayList().get(j).getpublishDate().equals(insertMoviePublishDate.getText()))
                 {
-
-                    id = movieArrayList.get(j).getmovieID();
+                    warningMessage.setText(" ");
+                    movieId = logic.getAllMovieArrayList().get(j).getmovieID();
                     check = true;
+
                 }
             }
-            if (check)
+            if(check){
+             warningMessage.setText("");
+            movieObservableList.clear();
+           // movieArrayList.addAll(logic.checkIfTheMovieExists(insertMovieName.getText(), insertMoviePublishDate.getText(), parts, movieId));
+            movieObservableList.addAll(logic.checkIfTheMovieExists(insertMovieName.getText(), insertMoviePublishDate.getText(), parts, movieId, actorId, actorAge));
+            
+            }
+            else{
+                //When a new music to be added 
+                   warningMessage.setText("");
+                   movieObservableList.clear();
+                   int newMovieId = (logic.getAllMovieArrayList().size()+1);
+                   mc = new MovieClass(newMovieId, insertMovieName.getText(), insertMoviePublishDate.getText());
+                   for (int i = 0; i < logic.getAllArtistsArrayList().size(); i++){
+                       
+               //to check the added movie in the selected person
+               if(logic.getAllArtistsArrayList().get(i).getfirstName().equalsIgnoreCase(parts[0])
+                       && logic.getAllArtistsArrayList().get(i).getlastName().equalsIgnoreCase(parts[1])){
+                           //logic.getAllArtistsArrayList().get(i).getMovieArrayList().add(mc);
+                           logic.addAllMovies(mc);
+
+                           logic.getAllArtistsArrayList().get(i).setMovieArrayList(mc);
+                           //logic.addArtistInMusicArray(actorId, parts[0], parts[1], actorAge);
+                           //movieArrayList.addAll(logic.getAllArtistsArrayList().get(i).getMovieArrayList());
+                           movieObservableList.addAll(logic.getAllArtistsArrayList().get(i).getMovieArrayList());
+                       } 
+                     
+                   }
+                   
+                   //Adding the person in to the new movie arrayList
+                   for(int i = 0; i< logic.getAllMovieArrayList().size();i++){
+                       if(logic.getAllMovieArrayList().get(i).getmovieID()==newMovieId){
+                           logic.getAllMovieArrayList().get(i).getActorArrayList().add(new ArtistClass(actorId, parts[0], parts[1], actorAge));
+                       }
+                   }
+
+                }
+             }catch (Exception e)
+            {
+                warningMessage.setText("Fill a number in the publish date box");
+            }
+            }
+            /* if (check)
             {
                 movieObservableList.clear();//Clearing the movieObservableList 
                 mc = new MovieClass(id, insertMovieName.getText(), insertMoviePublishDate.getText());
@@ -506,9 +619,10 @@ public class FXMLDocumentController implements Initializable
                     }
                 }
 
-            }
+            }*/
 
         }
+                
 
         //  System.out.println("************** "+ movieObservableList.get(movieArrayList.size()-1).getmovieID());
         /*   artistObservableList.stream()
@@ -517,6 +631,7 @@ public class FXMLDocumentController implements Initializable
                 .forEach(i-> System.out.println("movie added  " + i.toString()));
 
          */
+
     }
 
     public void editTreeViewArtistName()
@@ -578,7 +693,7 @@ public class FXMLDocumentController implements Initializable
     private void seeAllMoviesButton(ActionEvent event)
     {
         movieObservableList.clear();
-        movieArrayList.stream()
+        logic.getAllMovieArrayList().stream()
                 .forEach(s -> movieObservableList.add(s));
     }
 

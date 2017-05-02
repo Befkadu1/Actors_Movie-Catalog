@@ -79,9 +79,15 @@ public class MovieClass
         return actorArrayList;
     }
 
-    public void setActorArrayList(ArrayList<ArtistClass> eachActorArrayList)
+    public void setActorArrayList(ArtistClass eachActorArrayList)
     {
-        this.actorArrayList = eachActorArrayList;
+        actorArrayList.add(eachActorArrayList);
+    }
+    
+         public void remove(ArtistClass newArtistObject)
+    {
+       //movieArrayList.add(new MovieClass(n, name, date)) ;
+        actorArrayList.remove(newArtistObject);
     }
     
     
