@@ -369,7 +369,7 @@ public class FXMLDocumentController implements Initializable
                 warningMessage.setText("Write both movie name and publish date");
             } 
             //message if the user enters the non letters
-            else if (!insertMovieName.getText().matches("^[A-zåäöÅÄÖ-]+$") || (!insertMoviePublishDate.getText().matches("^[0-9]*$")))
+            else if (!insertMovieName.getText().matches("^[A-zåäöÅÄÖ+0-9-]+$") || (!insertMoviePublishDate.getText().matches("^[0-9]*$")))
             {
                 warningMessage.setText("Write only letters & number");
             } else
