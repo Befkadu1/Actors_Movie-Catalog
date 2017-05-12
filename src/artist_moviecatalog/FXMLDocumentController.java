@@ -447,7 +447,6 @@ public class FXMLDocumentController implements Initializable
                 .filter(m-> m.getfirstName().equals("Harrison"))
                 .map(t-> t.getMovieArrayList().add(mc))
                 .forEach(i-> System.out.println("movie added  " + i.toString()));
-
          */
     }
 
@@ -466,11 +465,9 @@ public class FXMLDocumentController implements Initializable
  
 
     /*private String treeSelection(){
-
          // TreeItem<String> selectedItem =  (TreeItem<String>) treeView.getSelectionModel().getSelectedItem();
           //System.out.println("selectedItem " + selectedItem.toString().isEmpty());
           
-
          return selectedItem.getValue();
       }*/
     
